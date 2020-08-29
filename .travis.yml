@@ -1,31 +1,35 @@
 ---
+os: linux
+dist: bionic
 language: python
 python: "3.7"
 
-# Use the new container infrastructure
-sudo: false
-
-# Install ansible
+# install ansible
 addons:
   apt:
     packages:
       - python-pip
 
 install:
-  # Install ansible
+  # install ansible
   - pip install ansible
 
-  # Check ansible version
+  # install ansible-lint
+  - pip install ansible-lint
+
+  # check ansible version
   - ansible --version
 
   - cd v2ray
 
-  # Create ansible.cfg with correct roles_path
+  # create ansible.cfg with correct roles_path
   - printf '[defaults]\nroles_path=../' > ansible.cfg
 
 script:
-  # Basic role syntax check
+  # basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  # install v2ray and start its service
+  - ansible-playbook tests/test.yml -i tests/inventory --become
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
