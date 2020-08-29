@@ -49,7 +49,7 @@
 
 - name: check v2ray configuration existence
   stat:
-    path: /usr/bin/v2ray
+    path: /usr/local/etc/v2ray/config.json
   register: config_stat
 
 - name: create v2ray config
