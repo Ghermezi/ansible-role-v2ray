@@ -1,7 +1,7 @@
 ---
 - name: check v2ray existence
   stat:
-    path: /usr/bin/v2ray
+    path: /usr/local/bin/v2ray
   register: v2ray_stat
 
 - name: download v2ray installer
