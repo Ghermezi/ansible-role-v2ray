@@ -47,12 +47,17 @@
     enabled: true
   when: not v2ray_stat.stat.exists
 
-- name: sync v2ray config
-  template:
-    src: config.json.j2
-    dest: /usr/local/etc/v2ray/config.json
-    backup: true
+- name: check v2ray configuration existence
+  stat:
+    path: /usr/bin/v2ray
+  register: config_stat
+
+- name: create v2ray config
+  file:
+    state: touch
+    path: /usr/local/etc/v2ray/config.json
     mode: '644'
+  when: not config_stat.stat.exists
 
 - name: v2ray config test
   command:
