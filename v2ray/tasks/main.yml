@@ -22,7 +22,7 @@
 
 - name: execute the v2ray installer
   command: "/tmp/install-release.sh --version {{ v2ray_version }}"
-  when: not v2ray_stat.exists
+  when: not v2ray_stat.stat.exists
 
 - name: execute the v2ray dat installer
   command: "/tmp/install-dat-release.sh"
