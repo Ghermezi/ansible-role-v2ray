@@ -32,6 +32,8 @@ script:
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
   # install v2ray and start its service
   - ansible-playbook tests/test.yml -i tests/inventory --become
+  # v2ray version
+  - v2ray -version
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
