@@ -10,7 +10,7 @@
     dest: /tmp/install-release.sh
     mode: '755'
     force: true
-  when: v2ray_stat.exists is False
+  when: v2ray_stat.stat.exists is False
 
 - name: download v2ray dat installer
   get_url:
@@ -18,7 +18,7 @@
     dest: /tmp/install-dat-release.sh
     mode: '755'
     force: true
-  when: v2ray_stat.exists is False
+  when: v2ray_stat.stat.exists is False
 
 - name: execute the v2ray installer
   command: "/tmp/install-release.sh --version {{ v2ray_version }}"
@@ -26,26 +26,26 @@
 
 - name: execute the v2ray dat installer
   command: "/tmp/install-dat-release.sh"
-  when: v2ray_stat.exists is False
+  when: v2ray_stat.stat.exists is False
 
 - name: remove the v2ray installer
   file:
     path: /tmp/install-release.sh
     state: absent
-  when: v2ray_stat.exists is False
+  when: v2ray_stat.stat.exists is False
 
 - name: remove the v2ray dat installer
   file:
     path: /tmp/install-dat-release.sh
     state: absent
-  when: v2ray_stat.exists is False
+  when: v2ray_stat.stat.exists is False
 
 - name: enable v2ray service
   service:
     name: v2ray
     state: started
     enabled: true
-  when: v2ray_stat.exists is False
+  when: v2ray_stat.stat.exists is False
 
 - name: sync v2ray config
   template:
