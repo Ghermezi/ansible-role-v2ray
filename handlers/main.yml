@@ -1,0 +1,5 @@
+---
+- name: restart v2ray service
+  service:
+    name: v2ray
+    state: restarted

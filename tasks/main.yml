@@ -1,0 +1,59 @@
+---
+- name: check v2ray existence
+  stat:
+    path: /usr/bin/v2ray
+  register: v2ray_stat
+
+- name: download v2ray installer
+  get_url:
+    url: https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
+    dest: /tmp/install-release.sh
+    mode: '755'
+    force: true
+  when: v2ray_stat.exists is False
+
+- name: download v2ray dat installer
+  get_url:
+    url: https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh
+    dest: /tmp/install-dat-release.sh
+    mode: '755'
+    force: true
+  when: v2ray_stat.exists is False
+
+- name: execute the v2ray installer
+  command: "/tmp/install-release.sh --version {{ v2ray_version }}"
+  when: v2ray_stat.exists is False
+
+- name: execute the v2ray dat installer
+  command: "/tmp/install-dat-release.sh"
+  when: v2ray_stat.exists is False
+
+- name: remove the v2ray installer
+  file:
+    path: /tmp/install-release.sh
+    state: absent
+  when: v2ray_stat.exists is False
+
+- name: remove the v2ray dat installer
+  file:
+    path: /tmp/install-dat-release.sh
+    state: absent
+  when: v2ray_stat.exists is False
+
+- name: enable v2ray service
+  service:
+    name: v2ray
+    state: started
+    enabled: true
+  when: v2ray_stat.exists is False
+
+- name: sync v2ray config
+  template:
+    src: config.json.j2
+    dest: /usr/local/etc/v2ray/config.json
+    backup: true
+    mode: '644'
+
+- name: v2ray config test
+  command: /usr/local/bin/v2ray -test -config=/usr/local/etc/v2ray/config.json
+  notify: restart v2ray service
