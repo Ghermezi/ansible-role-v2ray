@@ -56,9 +56,6 @@
 
 - name: v2ray config test
   command:
-    cmd: /usr/local/bin/v2ray
-    argv:
-      - -test
-      - -config=/usr/local/etc/v2ray/config.json
+    cmd: /usr/local/bin/v2ray -test -config=/usr/local/etc/v2ray/config.json
   changed_when: false
   notify: restart v2ray service
