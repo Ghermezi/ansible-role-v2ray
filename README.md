@@ -2,4 +2,14 @@
 ![Travis (.com)](https://img.shields.io/travis/com/Ghermezi/ansible-role-v2ray?logo=travis&style=flat-square)
 
 ## Introduction
-Project V is a set of tools to help you build your own privacy network over internet. The core of Project V, named V2ray, is responsible for network protocols and communications. It can work alone, as well as combine with other tools.
+Ansible rule based on [fhs-install-v2ray](https://github.com/v2fly/fhs-install-v2ray) for installing v2ray.
+v2ray is a core of Project V.
+
+## Usage
+Define v2ray as requirement in your playbook then you can use it.
+
+```yml
+- src: https://github.com/Ghermezi/ansible-role-v2ray
+  version: master
+```
+There is a single variable named `v2ray_version` for setting the version of v2ray.
