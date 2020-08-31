@@ -5,9 +5,12 @@
   register: v2ray_stat
 
 - name: check v2ray version
-  command:
-    cmd: "[ $(/usr/local/bin/v2ray --version | head -1 | cut -d' ' -f2) < {{ v2ray_version }} ]"
+  shell: |
+    [[ "v$(/usr/local/bin/v2ray --version | head -1 | cut -d' ' -f2)" < {{ v2ray_version }} ]]
+  args:
+    executable: /bin/bash
   changed_when: false
+  ignore_errors: true
   when: v2ray_stat.stat.exists
   register: v2ray_update
 
@@ -17,24 +20,24 @@
     dest: /tmp/install-release.sh
     mode: '755'
     force: true
-  when: not v2ray_stat.stat.exists or v2ray_update
+  when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
 - name: execute the v2ray installer
   command: "/tmp/install-release.sh --version {{ v2ray_version }}"
-  when: not v2ray_stat.stat.exists or v2ray_update
+  when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
 - name: remove the v2ray installer
   file:
     path: /tmp/install-release.sh
     state: absent
-  when: not v2ray_stat.stat.exists or v2ray_update
+  when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
 - name: enable v2ray service
   service:
     name: v2ray
     state: started
     enabled: true
-  when: not v2ray_stat.stat.exists or v2ray_update
+  when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
 - name: check v2ray configuration existence
   stat:
