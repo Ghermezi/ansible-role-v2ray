@@ -6,7 +6,7 @@
 
 - name: check v2ray version
   command:
-    cmd: "[ $(/usr/local/bin/v2ray --version) < {{ v2ray_version }} ]"
+    cmd: "[ $(/usr/local/bin/v2ray --version | head -1 | cut -d' ' -f2) < {{ v2ray_version }} ]"
   changed_when: false
   when: v2ray_stat.stat.exists
   register: v2ray_update
