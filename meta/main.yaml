@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Parham Alvani
+  description: Project V is a collection of tools that can help you build your own basic communication network.
+  company: Ghermezi
+
+  issue_tracker_url: https://github.com/Ghermezi/ansible-role-v2ray/issues
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Ubuntu
+
+  galaxy_tags: []
+
+dependencies: []

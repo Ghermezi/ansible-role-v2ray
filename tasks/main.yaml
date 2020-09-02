@@ -1,10 +1,9 @@
----
-- name: check v2ray existence
+- name: Check v2ray existence
   stat:
     path: /usr/local/bin/v2ray
   register: v2ray_stat
 
-- name: check v2ray version
+- name: Check v2ray version
   shell: |
     [[ "v$(/usr/local/bin/v2ray --version | head -1 | cut -d' ' -f2)" < {{ v2ray_version }} ]]
   args:
@@ -14,7 +13,7 @@
   when: v2ray_stat.stat.exists
   register: v2ray_update
 
-- name: download v2ray installer
+- name: Download v2ray installer
   get_url:
     url: https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
     dest: /tmp/install-release.sh
@@ -22,37 +21,37 @@
     force: true
   when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
-- name: execute the v2ray installer
+- name: Execute the v2ray installer
   command: "/tmp/install-release.sh --version {{ v2ray_version }}"
   when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
-- name: remove the v2ray installer
+- name: Remove the v2ray installer
   file:
     path: /tmp/install-release.sh
     state: absent
   when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
-- name: enable v2ray service
+- name: Enable v2ray service
   service:
     name: v2ray
     state: started
     enabled: true
   when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
-- name: check v2ray configuration existence
+- name: Check v2ray configuration existence
   stat:
     path: /usr/local/etc/v2ray/config.json
   register: config_stat
 
-- name: create v2ray config
+- name: Rreate v2ray config
   file:
     state: touch
     path: /usr/local/etc/v2ray/config.json
     mode: '644'
   when: not config_stat.stat.exists
 
-- name: v2ray config test
+- name: V2ray config test
   command:
     cmd: /usr/local/bin/v2ray -test -config=/usr/local/etc/v2ray/config.json
   changed_when: false
-  notify: restart v2ray service
+  notify: Restart v2ray service

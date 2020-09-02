@@ -4,35 +4,33 @@ dist: bionic
 language: python
 python: "3.7"
 
-# install ansible
+# Install Ansible
 addons:
   apt:
     packages:
       - python-pip
 
 install:
-  # install ansible
+  # Install Ansible
   - pip install ansible
 
-  # install ansible-lint
+  # Install Ansible Lint
   - pip install ansible-lint
 
-  # check ansible version
+  # Check Ansible version
   - ansible --version
 
-  - cd v2ray
-
-  # create ansible.cfg with correct roles_path
+  # Create ansible.cfg with correct roles_path
   - printf '[defaults]\nroles_path=../' > ansible.cfg
 
 script:
-  # ansible lint
+  # Ansible Lint
   - ansible-lint .
-  # basic role syntax check
+  # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  # install v2ray and start its service
+  # Install v2ray and start its service
   - ansible-playbook tests/test.yml -i tests/inventory --become
-  # v2ray version
+  # V2ray version
   - v2ray -version
 
 notifications:
