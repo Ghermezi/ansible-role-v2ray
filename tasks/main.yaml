@@ -40,7 +40,7 @@
 
 - name: V2ray configs
   template:
-    src: "{{ item }}"
+    src: "{{ item }}.j2"
     dest: "/usr/local/etc/v2ray/{{ item | basename }}"
     mode: '644'
   loop: "{{ v2ray_configs | flatten(levels=1) }}"
