@@ -38,20 +38,14 @@
     enabled: true
   when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
-- name: Check v2ray configuration existence
-  stat:
-    path: /usr/local/etc/v2ray/config.json
-  register: config_stat
-
-- name: Rreate v2ray config
-  file:
-    state: touch
-    path: /usr/local/etc/v2ray/config.json
-    mode: '644'
-  when: not config_stat.stat.exists
+- name: V2ray configs
+  template:
+    src: "{{ item }}"
+    dest: "/usr/local/etc/v2ray/{{ item }}"
+  with_items: "{{ v2ray_configs }}"
 
 - name: V2ray config test
-  command:
-    cmd: /usr/local/bin/v2ray -test -config=/usr/local/etc/v2ray/config.json
+  command: "/usr/local/bin/v2ray -test -config=/usr/local/etc/v2ray/{{ item }}"
   changed_when: false
+  with_item: "{{ v2ray_configs }}"
   notify: Restart v2ray service
