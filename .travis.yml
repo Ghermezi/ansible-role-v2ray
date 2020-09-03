@@ -32,6 +32,9 @@ script:
   - ansible-playbook tests/test.yaml -i tests/inventory --become
   # V2ray version
   - v2ray -version
+  # V2ray configuration
+  - "[ -f /usr/local/etc/v2ray/config.json ]"
+  - cat /usr/local/etc/v2ray/config.json
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
