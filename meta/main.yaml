@@ -1,7 +1,9 @@
+---
 galaxy_info:
   author: Parham Alvani
   description: Project V is a collection of tools that can help you build your own basic communication network.
   company: Ghermezi
+  license: MIT
 
   issue_tracker_url: https://github.com/Ghermezi/ansible-role-v2ray/issues
 
