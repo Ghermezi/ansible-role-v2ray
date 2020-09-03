@@ -41,12 +41,12 @@
 - name: V2ray configs
   template:
     src: "{{ item }}"
-    dest: "/usr/local/etc/v2ray/{{ item }}"
+    dest: "/usr/local/etc/v2ray/{{ item | basename }}"
     mode: '644'
   loop: "{{ v2ray_configs | flatten(levels=1) }}"
 
 - name: V2ray config test
-  command: "/usr/local/bin/v2ray -test -config=/usr/local/etc/v2ray/{{ item }}"
+  command: "/usr/local/bin/v2ray -test -config=/usr/local/etc/v2ray/{{ item | basename }}"
   changed_when: false
   loop: "{{ v2ray_configs | flatten(levels=1) }}"
   notify: Restart v2ray service

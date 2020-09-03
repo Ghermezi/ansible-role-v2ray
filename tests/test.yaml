@@ -2,6 +2,6 @@
   remote_user: root
   vars:
     v2ray_configs:
-      - config.json
+      - templates/config.json
   roles:
     - ansible-role-v2ray
