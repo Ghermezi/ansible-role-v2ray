@@ -18,5 +18,3 @@ Define v2ray as requirement in your playbook then you can use it.
   version: master
   name: v2ray
 ```
-
-There is a single variable named `v2ray_version` for setting the version of v2ray.
