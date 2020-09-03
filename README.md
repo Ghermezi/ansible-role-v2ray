@@ -1,6 +1,6 @@
 # V2ray Ansible Role
 
-![[Travis (.com)](https://img.shields.io/travis/com/Ghermezi/ansible-role-v2ray?logo=travis&style=flat-square)](https://travis-ci.com/github/Ghermezi/ansible-role-v2ray)
+[![Travis (.com)](https://img.shields.io/travis/com/Ghermezi/ansible-role-v2ray?logo=travis&style=flat-square)](https://travis-ci.com/github/Ghermezi/ansible-role-v2ray)
 
 ## Introduction
 
