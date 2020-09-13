@@ -17,7 +17,7 @@
   get_url:
     url: https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
     dest: /tmp/install-release.sh
-    mode: '755'
+    mode: 755
     force: true
   when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
@@ -38,15 +38,15 @@
     enabled: true
   when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
-- name: V2ray configs
+- name: Create v2ray config
   template:
-    src: "{{ item }}.j2"
-    dest: "/usr/local/etc/v2ray/{{ item | basename }}"
-    mode: '644'
-  loop: "{{ v2ray_configs | flatten(levels=1) }}"
+    src: "{{ v2ray_config_template }}"
+    dest: /usr/local/etc/v2ray/config.json
+    mode: 0644
+  when: v2ray_config_template != ""
+  notify: restart v2ray service
 
 - name: V2ray config test
-  command: "/usr/local/bin/v2ray -test -config=/usr/local/etc/v2ray/{{ item | basename }}"
+  command: "/usr/local/bin/v2ray -test -config=/usr/local/etc/v2ray/config.json"
   changed_when: false
-  loop: "{{ v2ray_configs | flatten(levels=1) }}"
-  notify: Restart v2ray service
+  notify: restart v2ray service

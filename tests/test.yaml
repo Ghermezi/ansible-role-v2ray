@@ -1,7 +1,6 @@
 - hosts: localhost
   remote_user: root
   vars:
-    v2ray_configs:
-      - templates/config.json
+    v2ray_config_template: "{{ playbook_dir }}/templates/config.json.j2"
   roles:
     - ansible-role-v2ray
