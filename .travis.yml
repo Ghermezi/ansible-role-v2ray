@@ -25,7 +25,7 @@ install:
 
 script:
   # Ansible Lint
-  - ansible-lint .
+  # - ansible-lint .
   # Basic role syntax check
   - ansible-playbook tests/test.yaml -i tests/inventory --syntax-check
   # Install v2ray and start its service

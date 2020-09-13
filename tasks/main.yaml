@@ -43,7 +43,7 @@
     src: "{{ v2ray_config_template }}"
     dest: /usr/local/etc/v2ray/config.json
     mode: 0644
-  when: not v2ray_config_template is empty
+  when: v2ray_config_template != ""
   notify: restart v2ray service
 
 - name: V2ray config test
