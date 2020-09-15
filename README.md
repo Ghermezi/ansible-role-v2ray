@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Ansible rule based on [fhs-install-v2ray](https://github.com/v2fly/fhs-install-v2ray) for installing v2ray.
+Ansible Role based on [fhs-install-v2ray](https://github.com/v2fly/fhs-install-v2ray) for installing v2ray.
 v2ray is a core of Project V.
 
 ## Installation
