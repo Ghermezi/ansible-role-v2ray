@@ -5,7 +5,7 @@
 
 - name: Check v2ray version
   shell: |
-    [[ "v$(/usr/local/bin/v2ray --version | head -1 | cut -d' ' -f2)" < {{ v2ray_version }} ]]
+    [[ "v$(/usr/local/bin/v2ray --version | head -1 | cut -d' ' -f2)" < {{ v2ray_version | quote }} ]]
   args:
     executable: /bin/bash
   changed_when: false
@@ -43,7 +43,7 @@
     src: "{{ v2ray_config_template }}"
     dest: /usr/local/etc/v2ray/config.json
     mode: 0644
-  when: v2ray_config_template != ""
+  when: v2ray_config_template | length > 0
   notify: restart v2ray service
 
 - name: V2ray config test
