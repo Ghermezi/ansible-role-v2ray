@@ -56,10 +56,10 @@
     src: "{{ item.value }}"
     dest: /usr/local/etc/v2ray/{{ item.key }}.json
     mode: 0644
-  loop: v2ray_config_templates | dict2items
+  loop: "{{ v2ray_config_templates | dict2items }}"
 
 - name: V2ray config test
   command: "/usr/local/bin/v2ray -test -config=/usr/local/etc/v2ray/{{ item.key }}.json"
   changed_when: false
-  loop: v2ray_config_templates | dict2items
+  loop: "{{ v2ray_config_templates | dict2items }}"
   notify: restart v2ray service
