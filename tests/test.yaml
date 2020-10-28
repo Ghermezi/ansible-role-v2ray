@@ -2,5 +2,7 @@
   remote_user: root
   vars:
     v2ray_config_template: "{{ playbook_dir }}/templates/config.json.j2"
+    v2ray_config_templates:
+      direct: "{{ playbook_dir }}/templates/direct.json.j2"
   roles:
     - ansible-role-v2ray
