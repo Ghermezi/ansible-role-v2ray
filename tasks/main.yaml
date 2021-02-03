@@ -17,7 +17,7 @@
   get_url:
     url: https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
     dest: /tmp/install-release.sh
-    mode: 755
+    mode: 0755
     force: true
   when: not v2ray_stat.stat.exists or v2ray_update is succeeded
 
