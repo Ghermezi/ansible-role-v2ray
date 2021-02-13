@@ -4,14 +4,15 @@
   register: v2ray_stat
 
 - name: Check v2ray version
-  shell: |
-    [[ "v$(/usr/local/bin/v2ray --version | head -1 | cut -d' ' -f2)" < {{ v2ray_version | quote }} ]]
-  args:
-    executable: /bin/bash
+  command: /usr/local/bin/v2ray --version
+  register: v2ray_local_version
   changed_when: false
-  ignore_errors: true
   when: v2ray_stat.stat.exists
-  register: v2ray_update
+
+- name: Set v2ray_update variable
+  set_fact:
+    v2ray_update: "{{ 'v' + v2ray_local_version.stdout.split()[1] < v2ray_version }}"
+  when: v2ray_stat.stat.exists
 
 - name: Download v2ray installer
   get_url:
@@ -19,24 +20,24 @@
     dest: /tmp/install-release.sh
     mode: 0755
     force: true
-  when: not v2ray_stat.stat.exists or v2ray_update is succeeded
+  when: not v2ray_stat.stat.exists or v2ray_update
 
 - name: Execute the v2ray installer
   command: "/tmp/install-release.sh --version {{ v2ray_version }}"
-  when: not v2ray_stat.stat.exists or v2ray_update is succeeded
+  when: not v2ray_stat.stat.exists or v2ray_update
 
 - name: Remove the v2ray installer
   file:
     path: /tmp/install-release.sh
     state: absent
-  when: not v2ray_stat.stat.exists or v2ray_update is succeeded
+  when: not v2ray_stat.stat.exists or v2ray_update
 
 - name: Enable v2ray service
   service:
     name: v2ray
     state: started
     enabled: true
-  when: not v2ray_stat.stat.exists or v2ray_update is succeeded
+  when: not v2ray_stat.stat.exists or v2ray_update
 
 - name: Create v2ray config
   template:
